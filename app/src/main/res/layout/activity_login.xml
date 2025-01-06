@@ -75,8 +75,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
         android:textSize="18sp"
-        android:background="@drawable/rounded_button_solid"
-        android:text="Sign in" />
+        android:text="Sign in"
+        style="@style/button_blue" />
 
     <TextView
         android:layout_width="wrap_content"

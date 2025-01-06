@@ -18,6 +18,13 @@
         <item name="android:background">@color/pale_white</item>
     </style>
 
+    <style name="button_blue">
+        <item name="android:background">@drawable/rounded_button_solid</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:backgroundTint">@color/primary_blue</item>
+        <item name="android:textColor">@color/pale_white</item>
+    </style>
+
     <style name="logo">
         <item name="tint">@color/primary_black</item>
     </style>

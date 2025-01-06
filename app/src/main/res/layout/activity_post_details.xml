@@ -3,54 +3,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostDetails"
-    style="@style/background">
+    tools:context=".PostDetails">
 
-    <ImageView
-        android:id="@+id/btn_back"
+    <RelativeLayout
+        android:id="@+id/headerNav"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="12dp"
+            android:src="@drawable/arrow_back_24px" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="6dp"
+        android:paddingTop="4dp"
+        android:textSize="24sp"
+        android:fontFamily="@font/lato_bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_dateTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerNav"
+        tools:text="Post Title" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profilePic"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="12dp"
-        android:src="@drawable/arrow_back_24px"
+        android:layout_marginStart="12dp"
+        android:contentDescription="Post Author"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_pfp"
+        app:civ_border_color="@color/primary_blue"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/colorPrimary" />
+        app:layout_constraintTop_toBottomOf="@id/tv_dateTime" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/tv_date"-->
-<!--        tools:text="Date"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="20sp"/>-->
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/lato_bold"
+        tools:text="Author Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_profilePic"
+        app:layout_constraintTop_toBottomOf="@id/tv_dateTime"
+        app:layout_constraintBottom_toTopOf="@id/tv_description" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/tv_upvote"-->
-<!--        tools:text="00 upvotes"-->
-<!--        android:textSize="16sp"-->
-<!--        android:textColor="@color/black" />-->
+    <TextView
+        android:id="@+id/tv_dateTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="8dp"
+        android:paddingStart="8dp"
+        android:textSize="12sp"
+        android:textColor="@color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@id/iv_profilePic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_author"
+        tools:text="01/01/2025" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:id="@+id/imageview" />-->
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profilePic"
+        tools:text="Description" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/tv_title"-->
-<!--        tools:text="Title"-->
-<!--        android:textSize="30sp"-->
-<!--        android:textColor="@color/black" />-->
+    <LinearLayout
+        android:id="@+id/btn_upvote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/tag_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/tv_description"-->
-<!--        tools:text="Description"-->
-<!--        android:textColor="@color/black" />-->
+        <ImageView
+            android:id="@+id/icEdit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="6dp"
+            android:contentDescription="Thumbs Up Icon"
+            android:src="@drawable/thumb_up_24px"
+            app:tint="@color/pale_white" />
+
+        <TextView
+            android:id="@+id/tv_upvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pale_white"
+            android:textSize="16dp"
+            tools:text="1000" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

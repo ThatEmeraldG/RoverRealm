@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,22 +8,35 @@
     tools:context=".CreatePostActivity"
     style="@style/background">
 
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="12dp"
-        android:src="@drawable/arrow_back_24px"
-        app:tint="?attr/colorPrimary" />
+    <RelativeLayout
+        android:id="@+id/headerNav"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:text="Post"
-        android:textSize="16dp"
-        android:layout_alignParentEnd="true"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="12dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/arrow_back_24px" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post"
+            android:layout_marginHorizontal="12dp"
+            android:layout_centerVertical="true"
+            android:textSize="16dp"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/et_title"
@@ -37,20 +50,22 @@
         android:textColorHint="@color/darker_gray"
         android:textColorHighlight="@color/primary_blue"
         android:background="@drawable/rounded_corners"
-        android:layout_below="@+id/btn_submit" />
+        app:layout_constraintTop_toBottomOf="@id/headerNav" />
 
     <EditText
         android:id="@+id/et_description"
-        android:hint="Post Description"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="18sp"
-        android:gravity="top|start"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="12dp"
-        android:textColorHint="@color/darker_gray"
-        android:textColorHighlight="@color/primary_blue"
+        android:layout_height="0dp"
+        android:layout_margin="12dp"
         android:background="@drawable/rounded_corners"
-        android:layout_below="@+id/et_title" />
+        android:gravity="top|start"
+        android:hint="Post Description"
+        android:textColorHighlight="@color/primary_blue"
+        android:textColorHint="@color/darker_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_title" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
