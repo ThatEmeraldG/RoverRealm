@@ -45,7 +45,7 @@
             android:id="@+id/btn_editProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/rounded_button_solid"
             android:backgroundTint="@color/primary_blue"
             android:gravity="center"
             android:orientation="horizontal"

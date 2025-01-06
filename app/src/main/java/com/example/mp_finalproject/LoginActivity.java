@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser  user = auth.getCurrentUser ();
+                            FirebaseUser user = auth.getCurrentUser();
                             checkUserInDb(user);
                         } else {
                             Log.w("Firebase Auth", "signInWithCredential:failure", task.getException());

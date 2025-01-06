@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    String userId = auth.getCurrentUser ().getUid();
+                    String userId = auth.getCurrentUser().getUid();
                     User user = new User(userId, username, email, password, "");
 
                     db.collection("Users").document(userId).set(user)
