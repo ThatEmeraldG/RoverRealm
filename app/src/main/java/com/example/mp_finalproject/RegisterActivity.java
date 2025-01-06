@@ -18,7 +18,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mp_finalproject.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,28 +74,35 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_confirmPassword = etConfirmPassword.getText().toString().trim();
 
                 if(validateRegister(txt_username, txt_email, txt_password, txt_confirmPassword)){
-                    db.collection("Users").add(data).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(RegisterActivity.this, "Values added successfully", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                    registerUser(txt_email, txt_password);
+                    registerUser(txt_username, txt_email, txt_password);
                 }
             }
         });
     }
 
-    private void registerUser(String email, String password){
+    private void registerUser(String username, String email, String password){
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    finish();
+                    String userId = auth.getCurrentUser ().getUid();
+                    User user = new User(userId, username, email, password, "");
+
+                    db.collection("Users").document(userId).set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(RegisterActivity.this, "Failed to save user data!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 } else {
                     Toast.makeText(RegisterActivity.this, "Registration Failed!", Toast.LENGTH_SHORT).show();
                 }

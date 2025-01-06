@@ -3,7 +3,6 @@ package com.example.mp_finalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,11 +18,9 @@ import java.util.Locale;
 
 public class PostDetails extends AppCompatActivity {
     // Initialize Variable
-    ImageView imageView;
-    TextView tv_title;
-    TextView tv_description;
-    TextView tv_upvote;
-    TextView tv_date;
+    private ImageView iv_image, backBtn;
+    private TextView tv_author, tv_title, tv_upvote, tv_dateTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,30 +34,31 @@ public class PostDetails extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        Button backBtn = findViewById(R.id.btn_back);
+        backBtn = findViewById(R.id.btn_back);
+
         if(intent == null){
-            imageView = findViewById(R.id.imageview);
+            iv_image = findViewById(R.id.iv_images);
+            tv_author = findViewById(R.id.tv_author);
             tv_title = findViewById(R.id.tv_title);
-            tv_description = findViewById(R.id.tv_description);
             tv_upvote = findViewById(R.id.tv_upvote);
-            tv_date = findViewById(R.id.tv_date);
+            tv_dateTime = findViewById(R.id.tv_dateTime);
 
             int image = intent.getIntExtra("image", -1);
-            String name = intent.getStringExtra("title");
+            String author = intent.getStringExtra("author");
+            String title = intent.getStringExtra("title");
             int upvote = intent.getIntExtra("upvote", -1);
-            String synopsis = intent.getStringExtra("description");
             Date date = (Date) intent.getSerializableExtra("date");
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault());
             String formattedDate = dateFormat.format(date);
 
             if (image != -1) {
-                imageView.setImageResource(image);
+                iv_image.setImageResource(image);
             }
-            tv_title.setText(name);
-            tv_description.setText(synopsis);
+            tv_author.setText(author);
+            tv_title.setText(title);
             tv_upvote.setText(String.valueOf(upvote));
-            tv_date.setText(formattedDate);
+            tv_dateTime.setText(formattedDate);
         }
 
         backBtn.setOnClickListener(new View.OnClickListener() {

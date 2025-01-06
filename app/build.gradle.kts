@@ -49,6 +49,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.firebase:firebase-auth:23.1.0")
 
     implementation("com.github.dhaval2404:imagepicker:2.1")
 

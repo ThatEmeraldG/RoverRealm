@@ -3,13 +3,13 @@ package com.example.mp_finalproject.model;
 import java.util.List;
 
 public class User {
-    private int userId;
+    private String userId;
     private String username;
     private String email;
     private String password;
     private String profilePicture;
 
-    public User(int userId, String username, String email, String password, String profilePicture) {
+    public User(String userId, String username, String email, String password, String profilePicture) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -17,11 +17,11 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
