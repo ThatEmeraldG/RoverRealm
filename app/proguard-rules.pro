@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--if class androidx.credentials.CredentialManager
--keep class androidx.credentials.playservices.** {
-  *;
-}
+#-if class androidx.credentials.CredentialManager
+#-keep class androidx.credentials.playservices.** {
+#  *;
+#}
