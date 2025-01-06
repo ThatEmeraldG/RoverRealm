@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_blue">#55A4FF</color>
+    <color name="pale_white">#EFEFEF</color>
+    <color name="primary_black">#0A0C10</color>
+    <color name="accent_black">#151720</color>
+    <color name="darker_gray">@android:color/darker_gray</color>
 </resources>

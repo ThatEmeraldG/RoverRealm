@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    tools:context=".CreatePostActivity"
+    style="@style/background">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/arrow_back_24px"
+        app:tint="?attr/colorPrimary" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"
+        android:textSize="16dp"
+        android:layout_alignParentEnd="true"/>
+
+    <EditText
+        android:id="@+id/et_title"
+        android:hint="Post Title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="18sp"
+        android:gravity="top|start"
+        android:layout_marginVertical="6dp"
+        android:textColorHint="@color/darker_gray"
+        android:textColorHighlight="@color/primary_blue"
+        android:background="@drawable/rounded_corners"
+        android:layout_below="@+id/btn_submit" />
+
+    <EditText
+        android:id="@+id/et_description"
+        android:hint="Post Description"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:gravity="top|start"
+        android:textColorHint="@color/darker_gray"
+        android:textColorHighlight="@color/primary_blue"
+        android:background="@drawable/rounded_corners"
+        android:layout_below="@+id/et_title" />
+
+</RelativeLayout>
