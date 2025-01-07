@@ -36,7 +36,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.tv_title.setText(postList.get(position).getTitle());
         holder.tv_upvote.setText(postUpvotes);
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos = holder.getAdapterPosition();

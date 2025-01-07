@@ -67,30 +67,38 @@ public class HomeFragment extends Fragment {
         rv_posts.setAdapter(postAdapter);
 
         db = FirebaseFirestore.getInstance();
-//        fetchPosts();
+        fetchPosts();
 
         return view;
     }
 
-    private void fetchPosts(){
+    private void fetchPosts() {
         db.collection("Posts")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error != null) {
-                            Log.e("FirestoreError: ", error.getMessage());
-                            return;
-                        }
-                        postList.clear();
-
-                        for(DocumentSnapshot snapshot : value.getDocuments()) {
-                            Post posts = snapshot.toObject(Post.class);
-                            if (posts != null) {
-                                postList.add(posts);
-                            }
-                        }
-                        postAdapter.notifyDataSetChanged();
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("FirestoreError", "Error fetching posts", error);
+                        return;
                     }
+
+                    if (value == null || value.isEmpty()) {
+                        Log.e("FirestoreError", "QuerySnapshot is null or empty");
+                        return;
+                    }
+
+                    postList.clear();
+                    for (DocumentSnapshot snapshot : value.getDocuments()) {
+                        Post post = snapshot.toObject(Post.class);
+                        if (post != null) {
+                            postList.add(post);
+                        } else {
+                            Log.e("FirestoreError", "Failed to map document to Post class");
+                        }
+                    }
+
+                    postAdapter.notifyDataSetChanged();
                 });
     }
+
+
+
 }

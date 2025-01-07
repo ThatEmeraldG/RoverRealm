@@ -23,7 +23,7 @@ public class Post {
         this.date = date;
         this.tags = tags;
     }
-
+    public Post() {}
     public String getPostId() {
         return postId;
     }
