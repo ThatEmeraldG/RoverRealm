@@ -2,8 +2,11 @@ package com.example.mp_finalproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,26 +24,16 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private LinearLayout logoutBtn;
+    private SwitchCompat nightModeSwitch;
+    private boolean nightMode;
+    private SharedPreferences modePreferences;
+    private SharedPreferences.Editor modeEditor;
+
 
     public ProfileFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
 
 //    public static ProfileFragment newInstance(String param1, String param2) {
 //        ProfileFragment fragment = new ProfileFragment();
@@ -63,6 +56,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         logoutBtn = view.findViewById(R.id.btn_logout);
+        nightModeSwitch = view.findViewById(R.id.nightModeSwitch);
+        modePreferences = requireActivity().getSharedPreferences("modePreferences", Context.MODE_PRIVATE);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +68,34 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        handleNightMode();
+
         return view;
+    }
+
+    private void handleNightMode() {
+        if(nightMode){
+            nightModeSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        nightModeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (nightMode){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    modeEditor = modePreferences.edit();
+                    modeEditor.putBoolean("night", false);
+                }
+                else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    modeEditor = modePreferences.edit();
+                    modeEditor.putBoolean("night", true);
+                }
+                modeEditor.apply();
+            }
+        });
     }
 }

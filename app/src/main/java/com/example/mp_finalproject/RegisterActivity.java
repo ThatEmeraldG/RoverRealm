@@ -5,9 +5,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +34,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private LinearLayout mainLayout;
     private EditText etUsername, etEmail, etPassword, etConfirmPassword;
     private Button submitBtn;
     private TextView loginRedirect;
-    private ImageView ivLogo;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +58,14 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirmPassword);
         loginRedirect = findViewById(R.id.loginRedirect);
-        ivLogo = findViewById(R.id.iv_logo);
         submitBtn = findViewById(R.id.btn_submit);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        progressBar = new ProgressBar(RegisterActivity.this, null, android.R.attr.progressBarStyleLarge);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mainLayout.addView(progressBar, params);
 
         loginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +90,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String username, String email, String password){
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 if(task.isSuccessful()){
                     String userId = auth.getCurrentUser().getUid();
                     User user = new User(userId, username, email, password, "");

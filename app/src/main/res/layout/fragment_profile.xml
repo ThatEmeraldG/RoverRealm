@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment"
-    style="@style/background">
+    tools:context=".ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,20 +16,20 @@
             android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:backgroundTint="@android:color/holo_red_dark"
             android:background="@drawable/rounded_button_solid"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ic_logout"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="6dp"
-                android:src="@drawable/logout_24px"
                 android:contentDescription="Sign Out Icon"
+                android:src="@drawable/logout_24px"
                 app:tint="@color/pale_white" />
 
             <TextView
@@ -37,20 +37,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign Out"
-                android:textSize="16dp"
-                android:textColor="@color/pale_white" />
+                android:textColor="@color/pale_white"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_editProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:background="@drawable/rounded_button_solid"
             android:backgroundTint="@color/primary_blue"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" >
+            app:layout_constraintBottom_toTopOf="@id/tab_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf=""
+            app:layout_constraintTop_toBottomOf="@+id/iv_profilePic">
 
             <ImageView
                 android:id="@+id/icEdit"
@@ -69,6 +72,30 @@
                 android:textSize="16dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/btn_nightMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/tab_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_editProfile"
+            app:layout_constraintTop_toBottomOf="@id/iv_profilePic">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/nightModeSwitch"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:layout_marginStart="8dp"
+                android:text="Dark Mode" />
+
+        </LinearLayout>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profilePic"
             android:layout_width="100dp"
@@ -78,7 +105,6 @@
             android:src="@drawable/default_pfp"
             app:civ_border_color="@color/primary_blue"
             app:civ_border_width="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,47 +112,68 @@
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
             android:fontFamily="@font/lato_bold"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_profilePic"
+            app:layout_constraintBottom_toTopOf="@+id/btn_editProfile"
+            app:layout_constraintStart_toEndOf="@id/iv_profilePic"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="User Name" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_textId"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="User ID: "-->
-        <!--            android:layout_marginLeft="50dp"-->
-        <!--            android:layout_marginTop="50dp"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/tv_username" />-->
+        <TextView
+            android:id="@+id/tv_textId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="User ID: "
+            app:layout_constraintStart_toEndOf="@id/iv_profilePic"
+            app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_textEmail"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="Email: "-->
-        <!--            android:layout_marginHorizontal="50dp"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/tv_textId" />-->
+        <TextView
+            android:id="@+id/tv_textEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Email: "
+            app:layout_constraintStart_toEndOf="@id/iv_profilePic"
+            app:layout_constraintTop_toBottomOf="@id/tv_textId" />
+
+        <TextView
+            android:id="@+id/tv_userId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/darker_gray"
+            tools:text="Rover ID"
+            app:layout_constraintStart_toEndOf="@id/tv_textId"
+            app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+        <TextView
+            android:id="@+id/tv_userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darker_gray"
+            android:layout_marginStart="8dp"
+            tools:text="blank_rover@gmail.com"
+            app:layout_constraintStart_toEndOf="@id/tv_textEmail"
+            app:layout_constraintTop_toBottomOf="@id/tv_userId" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:background="@android:color/transparent"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/primary_blue"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/primary_blue"
-            app:tabTextColor="@color/primary_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_username">
+            app:layout_constraintTop_toBottomOf="@id/btn_editProfile">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
