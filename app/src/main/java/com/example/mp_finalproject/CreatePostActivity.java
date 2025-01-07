@@ -71,18 +71,20 @@ public class CreatePostActivity extends AppCompatActivity {
     }
 
     private void createPost(String title, String description) {
-        Post post = new Post("1", title, description, authorId, "", 0, date, tags);
-        db.collection("posts").add(post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        String postID = db.collection("Posts").document().getId();
+        Post post = new Post(postID, title, description, authorId, "", 0, date, tags);
+        db.collection("Posts").document(postID).set(post).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(CreatePostActivity.this, "Failed to save user data!", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(CreatePostActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(CreatePostActivity.this, "Failed to save user data!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePostActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
 
 
 }

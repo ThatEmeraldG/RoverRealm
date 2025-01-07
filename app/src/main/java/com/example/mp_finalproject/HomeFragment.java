@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         rv_posts.setAdapter(postAdapter);
 
         db = FirebaseFirestore.getInstance();
-        fetchPosts();
+//        fetchPosts();
 
         return view;
     }
