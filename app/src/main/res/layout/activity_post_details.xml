@@ -108,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_description">
 
         <ImageView
-            android:id="@+id/icEdit"
+            android:id="@+id/iv_upvote"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="6dp"
@@ -122,6 +122,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/pale_white"
             android:textSize="16dp"
-            tools:text="1000" />
+            android:text="0" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -53,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
 
+        mainLayout = findViewById(R.id.main);
         etUsername = findViewById(R.id.et_username);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
@@ -66,11 +66,13 @@ public class RegisterActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         mainLayout.addView(progressBar, params);
+        progressBar.setVisibility(View.GONE);
 
         loginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 

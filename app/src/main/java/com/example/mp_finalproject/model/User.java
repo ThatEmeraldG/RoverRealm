@@ -9,6 +9,11 @@ public class User {
     private String password;
     private String profilePicture;
 
+    // Constructor
+    public User() {
+
+    }
+
     public User(String userId, String username, String email, String password, String profilePicture) {
         this.userId = userId;
         this.username = username;
@@ -17,6 +22,7 @@ public class User {
         this.profilePicture = profilePicture;
     }
 
+    // Getters and Setters
     public String getUserId() {
         return userId;
     }

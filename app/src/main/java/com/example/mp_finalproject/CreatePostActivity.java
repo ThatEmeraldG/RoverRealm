@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,7 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -27,12 +27,13 @@ import java.util.List;
 
 public class CreatePostActivity extends AppCompatActivity {
     private EditText etTitle, etDescription;
+    private ImageView backBtn;
     private Button submitBtn;
     private List<String> tags;
     private Date date;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private FirebaseUser user;
+    private FirebaseUser authUser;
     private String authorId;
 
     @Override
@@ -48,15 +49,22 @@ public class CreatePostActivity extends AppCompatActivity {
 
         etTitle = findViewById(R.id.et_title);
         etDescription =findViewById(R.id.et_description);
+        backBtn = findViewById(R.id.btn_back);
         submitBtn = findViewById(R.id.btn_submit);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        user = auth.getCurrentUser();
-        authorId = user.getUid();
+        authUser = auth.getCurrentUser();
+        authorId = authUser.getUid();
         tags = new ArrayList<>();
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = etTitle.getText().toString().trim();
@@ -65,8 +73,6 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 createPost(title, description);
             }
-
-
         });
     }
 
@@ -77,9 +83,10 @@ public class CreatePostActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(CreatePostActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePostActivity.this, "Post created", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
-                    Toast.makeText(CreatePostActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePostActivity.this, "Failed to create post", Toast.LENGTH_SHORT).show();
                 }
             }
         });

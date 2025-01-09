@@ -13,8 +13,8 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@id/bottomNavigation"
         android:layout_alignParentTop="true"
+        android:layout_above="@id/bottomNavigation"
     />
 
 <!--Bottom Navigation Bar-->
@@ -23,12 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/primary_black"
         app:itemIconSize="30sp"
-        app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/bottom_nav_icon_color"
-        app:itemTextColor="@color/bottom_nav_text_color"
-        android:background="@color/primary_black" >
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:menu="@menu/bottom_nav_menu">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>
