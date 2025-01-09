@@ -60,6 +60,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
             public void onClick(View v) {
                 int pos = holder.getAdapterPosition();
                 Intent intent = new Intent(context, PostDetails.class);
+                intent.putExtra("post_id", postList.get(pos).getPostId());
                 intent.putExtra("title", postList.get(pos).getTitle());
                 intent.putExtra("description", postList.get(pos).getDescription());
                 intent.putExtra("author_name", postList.get(pos).getAuthorId());
