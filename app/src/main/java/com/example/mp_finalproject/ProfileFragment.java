@@ -173,11 +173,16 @@ public class ProfileFragment extends Fragment {
                                 if (u != null) {
                                     user = u;
                                     Log.d("FirestoreSuccess", "User fetched successfully");
+
+                                    // Update TextView with user data
+                                    tvUsername.setText(user.getUsername());
+                                    tvUserEmail.setText(user.getEmail());
+                                    tvUserId.setText(user.getUserId());
                                 } else {
                                     Log.e("FirestoreError", "Failed to map document to User class");
                                 }
                             } else {
-                                Log.e("FirestoreError", "Failed to retrieve User data");
+                                Log.e("FirestoreError", "No User document found");
                             }
                         } else {
                             Log.e("FirestoreError", "Error fetching user", task.getException());
@@ -185,4 +190,5 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
+
 }
