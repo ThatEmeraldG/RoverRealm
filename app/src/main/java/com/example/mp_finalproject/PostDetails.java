@@ -26,7 +26,7 @@ import java.util.Locale;
 public class PostDetails extends AppCompatActivity {
     // UI Components
     private ImageView backBtn;
-    private TextView tv_author, tv_title, tv_upvote, tv_dateTime;
+    private TextView tv_author, tv_title, tv_upvote, tv_dateTime, tv_description;
     private LinearLayout btn_upvote;
 
     // Firestore
@@ -53,6 +53,7 @@ public class PostDetails extends AppCompatActivity {
         tv_title = findViewById(R.id.tv_title);
         tv_upvote = findViewById(R.id.tv_upvote);
         tv_dateTime = findViewById(R.id.tv_dateTime);
+        tv_description = findViewById(R.id.tv_description);
 
         // Firestore
         db = FirebaseFirestore.getInstance();
@@ -61,8 +62,7 @@ public class PostDetails extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             postId = intent.getStringExtra("post_id");
-            Log.d("PostDetails", "Post ID: " + postId);
-
+            String description = intent.getStringExtra("description");
             String author = intent.getStringExtra("author");
             String title = intent.getStringExtra("title");
             int upvote = intent.getIntExtra("upvote", 0);
@@ -77,6 +77,7 @@ public class PostDetails extends AppCompatActivity {
             tv_title.setText(title);
             tv_upvote.setText(String.valueOf(upvote));
             tv_dateTime.setText(formattedDate);
+            tv_description.setText(description);
         }
 
         // Back button functionality
