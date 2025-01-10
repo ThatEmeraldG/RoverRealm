@@ -76,6 +76,7 @@ public class ProfileFragment extends Fragment {
 
         nightModeSwitch = view.findViewById(R.id.nightModeSwitch);
         nightModeSwitch.setChecked(((MainActivity) requireActivity()).getNightMode());
+
         nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
