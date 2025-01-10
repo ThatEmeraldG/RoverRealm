@@ -16,11 +16,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class PostDetails extends AppCompatActivity {
@@ -28,6 +31,7 @@ public class PostDetails extends AppCompatActivity {
     private ImageView backBtn;
     private TextView tv_author, tv_title, tv_upvote, tv_dateTime, tv_description;
     private LinearLayout btn_upvote;
+    private ImageView iv_upvote;
 
     // Firestore
     private FirebaseFirestore db;
@@ -54,6 +58,7 @@ public class PostDetails extends AppCompatActivity {
         tv_upvote = findViewById(R.id.tv_upvote);
         tv_dateTime = findViewById(R.id.tv_dateTime);
         tv_description = findViewById(R.id.tv_description);
+        iv_upvote = findViewById(R.id.iv_upvote);
 
         // Firestore
         db = FirebaseFirestore.getInstance();
@@ -93,38 +98,89 @@ public class PostDetails extends AppCompatActivity {
             return;
         }
 
-        // Get the current upvote count
-        db.collection("Posts")
-                .document(postId)
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Check if the user has already upvoted the post
+        db.collection("Users")
+                .document(userId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        Long currentUpvotes = documentSnapshot.getLong("upvote");
-                        if (currentUpvotes == null) currentUpvotes = 0L;
+                        List<String> upvotedPosts = (List<String>) documentSnapshot.get("upvotedPostId");
+                        boolean alreadyUpvoted = upvotedPosts != null && upvotedPosts.contains(postId);
 
-                        // Increment upvote count
-                        Long newUpvotes = currentUpvotes + 1;
-
-                        // Update Firestore
+                        // Get current upvote count
                         db.collection("Posts")
                                 .document(postId)
-                                .update("upvote", newUpvotes)
-                                .addOnSuccessListener(unused -> {
-                                    // Update UI
-                                    tv_upvote.setText(String.valueOf(newUpvotes));
-                                    Toast.makeText(this, "Upvoted!", Toast.LENGTH_SHORT).show();
+                                .get()
+                                .addOnSuccessListener(postSnapshot -> {
+                                    if (postSnapshot.exists()) {
+                                        Long currentUpvotes = postSnapshot.getLong("upvote");
+                                        if (currentUpvotes == null) currentUpvotes = 0L;
+
+                                        Long newUpvotes;
+                                        FieldValue updateAction;
+
+                                        if (alreadyUpvoted) {
+                                            // User already upvoted, cancel upvote
+                                            newUpvotes = currentUpvotes - 1;
+                                            updateAction = FieldValue.arrayRemove(postId);
+                                            updateLikeButton(false); // Set button to unfilled state
+                                        } else {
+                                            // User has not upvoted, add upvote
+                                            newUpvotes = currentUpvotes + 1;
+                                            updateAction = FieldValue.arrayUnion(postId);
+                                            updateLikeButton(true); // Set button to filled state
+                                        }
+
+                                        // Update post upvotes
+                                        db.collection("Posts")
+                                                .document(postId)
+                                                .update("upvote", newUpvotes)
+                                                .addOnSuccessListener(unused -> {
+                                                    // Update user's upvoted posts
+                                                    db.collection("Users")
+                                                            .document(userId)
+                                                            .update("upvotedPostId", updateAction)
+                                                            .addOnSuccessListener(unused2 -> {
+                                                                // Update UI
+                                                                tv_upvote.setText(String.valueOf(newUpvotes));
+                                                                String message = alreadyUpvoted ? "Upvote removed!" : "Upvoted!";
+                                                                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                Log.e("FirestoreError", "Error updating user's upvoted posts", e);
+                                                                Toast.makeText(this, "Error updating user data", Toast.LENGTH_SHORT).show();
+                                                            });
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Log.e("FirestoreError", "Error updating post upvotes", e);
+                                                    Toast.makeText(this, "Error updating post upvotes", Toast.LENGTH_SHORT).show();
+                                                });
+                                    } else {
+                                        Toast.makeText(this, "Post not found", Toast.LENGTH_SHORT).show();
+                                    }
                                 })
                                 .addOnFailureListener(e -> {
-                                    Log.e("FirestoreError", "Error updating upvote", e);
-                                    Toast.makeText(this, "Error updating upvote", Toast.LENGTH_SHORT).show();
+                                    Log.e("FirestoreError", "Error fetching post", e);
+                                    Toast.makeText(this, "Error fetching post details", Toast.LENGTH_SHORT).show();
                                 });
                     } else {
-                        Toast.makeText(this, "Post not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "User data not found", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("FirestoreError", "Error fetching post", e);
-                    Toast.makeText(this, "Error fetching post details", Toast.LENGTH_SHORT).show();
+                    Log.e("FirestoreError", "Error fetching user data", e);
+                    Toast.makeText(this, "Error fetching user data", Toast.LENGTH_SHORT).show();
                 });
     }
+    private void updateLikeButton(boolean isUpvoted) {
+        if (isUpvoted) {
+            iv_upvote.setImageResource(R.drawable.thumb_up_fill_24px); // Change to filled like icon
+        } else {
+            iv_upvote.setImageResource(R.drawable.thumb_up_24px); // Change to outline like icon
+        }
+    }
+
+
 }
