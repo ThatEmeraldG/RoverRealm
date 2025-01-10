@@ -85,7 +85,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void updateProfile(String username, String email, String password) {
         Map<String, Object> userUpdates = new HashMap<>();
-        userUpdates.put("name", username);
+        userUpdates.put("username", username);
         userUpdates.put("email", email);
         userUpdates.put("password", password);
 

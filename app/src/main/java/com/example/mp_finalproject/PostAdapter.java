@@ -74,8 +74,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return postList.size();
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.postList = posts;
     }
 
     private void fetchAuthorName(String authorId, AuthorNameCallback callback) {

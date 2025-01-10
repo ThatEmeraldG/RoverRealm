@@ -101,7 +101,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="50dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="12dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_pfp"
             app:civ_border_color="@color/primary_blue"
@@ -128,7 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
-            android:text="User ID: "
+            android:text="User ID:"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/iv_profilePic"
             app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
@@ -137,7 +138,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="Email: "
+            android:text="Email:"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/iv_profilePic"
             app:layout_constraintTop_toBottomOf="@id/tv_textId" />
 
@@ -149,6 +151,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/darker_gray"
             tools:text="Rover ID"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/tv_textId"
             app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
@@ -159,6 +162,7 @@
             android:textColor="@color/darker_gray"
             android:layout_marginStart="8dp"
             tools:text="blank_rover@gmail.com"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/tv_textEmail"
             app:layout_constraintTop_toBottomOf="@id/tv_userId" />
 
@@ -178,11 +182,13 @@
             app:layout_constraintTop_toBottomOf="@id/btn_editProfile">
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_createdPosts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Created Posts" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_likedPosts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Liked Posts" />

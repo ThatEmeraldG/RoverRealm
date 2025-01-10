@@ -1,13 +1,15 @@
 package com.example.mp_finalproject;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
@@ -21,9 +23,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
-    BottomNavigationView bottomNav;
-    HomeFragment homeFragment;
-    ProfileFragment profileFragment;
+    private BottomNavigationView bottomNav;
+    private SharedPreferences modePreferences;
+    private boolean nightMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
             controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         }
 
+        modePreferences = getSharedPreferences("modePreferences", Context.MODE_PRIVATE);
+        nightMode = modePreferences.getBoolean("nightMode", false);
+        applyNightMode();
+
         bottomNav = findViewById(R.id.bottomNavigation);
-        homeFragment = new HomeFragment();
-        profileFragment = new ProfileFragment();
+        HomeFragment homeFragment = new HomeFragment();
+        ProfileFragment profileFragment = new ProfileFragment();
 
         if (savedInstanceState == null) {
             setFragment(homeFragment);
@@ -77,6 +83,26 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragmentContainer, selectedFragment)
                     .addToBackStack(null)
                     .commit();
+        }
+    }
+
+    public void setNightMode(boolean nightMode) {
+        this.nightMode = nightMode;
+        SharedPreferences.Editor modeEditor = modePreferences.edit();
+        modeEditor.putBoolean("nightMode", nightMode);
+        modeEditor.apply();
+        applyNightMode();
+    }
+
+    public boolean getNightMode() {
+        return nightMode;
+    }
+
+    public void applyNightMode() {
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 }

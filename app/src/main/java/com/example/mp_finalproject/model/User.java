@@ -1,5 +1,6 @@
 package com.example.mp_finalproject.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -8,6 +9,7 @@ public class User {
     private String email;
     private String password;
     private String profilePicture;
+    private List<String> upvotedPostId;
 
     // Constructor
     public User() {
@@ -20,6 +22,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.profilePicture = profilePicture;
+        this.upvotedPostId = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -61,5 +64,23 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<String> getUpvotedPostId() {
+        return upvotedPostId;
+    }
+
+    public void setUpvotedPostId(List<String> upvotedPostId) {
+        this.upvotedPostId = upvotedPostId;
+    }
+
+    public void addUpvotedPostId(String postId) {
+        if (!upvotedPostId.contains(postId)) {
+            upvotedPostId.add(postId);
+        }
+    }
+
+    public void removeUpvotedPostId(String postId) {
+        upvotedPostId.remove(postId);
     }
 }

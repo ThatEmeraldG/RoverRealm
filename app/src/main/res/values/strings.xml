@@ -3,4 +3,6 @@
     <string name="title_activity_post_details">Post Details</string>
     <string name="title_activity_login">Login</string>
     <string name="default_web_client_id">69688948524-uv6dgef15k6mhpu4lg9k1l39430756nl.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

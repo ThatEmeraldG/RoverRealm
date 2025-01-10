@@ -4,13 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    tools:context=".HomeFragment"
+    tools:context=".LikedPostsFragment"
     style="@style/background">
 
     <!--RecyclerView-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_posts"
+        android:id="@+id/rv_likedPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        tools:text="You haven't upvoted any post~" />
 
 </FrameLayout>
