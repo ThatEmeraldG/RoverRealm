@@ -80,8 +80,38 @@ public class LikedPostsFragment extends Fragment {
             tvNotice.setVisibility(View.VISIBLE);
             return;
         }
+
+        // Fetch the user's upvoted posts
+        db.collection("Users").document(userId)
+                .get()
+                .addOnSuccessListener(userDocument -> {
+                    if (userDocument.exists()) {
+                        // Get the list of upvotedPostIds from the user's document
+                        List<String> upvotedPostIds = (List<String>) userDocument.get("upvotedPostId");
+
+                        if (upvotedPostIds != null && !upvotedPostIds.isEmpty()) {
+                            // Fetch posts using the upvotedPostIds
+                            fetchLikedPosts(upvotedPostIds);
+                        } else {
+                            tvNotice.setText("No liked posts found.");
+                            tvNotice.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        Log.e("FirestoreError", "User document does not exist");
+                        tvNotice.setText("User data not found.");
+                        tvNotice.setVisibility(View.VISIBLE);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirestoreError", "Error fetching user document", e);
+                    tvNotice.setText("Failed to fetch user data.");
+                    tvNotice.setVisibility(View.VISIBLE);
+                });
+    }
+
+    private void fetchLikedPosts(List<String> upvotedPostIds) {
         db.collection("Posts")
-                .whereEqualTo("authorId", userId)
+                .whereIn("postId", upvotedPostIds)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         Log.e("FirestoreError", "Error fetching posts", error);
@@ -106,4 +136,5 @@ public class LikedPostsFragment extends Fragment {
                     postAdapter.notifyDataSetChanged();
                 });
     }
+
 }
