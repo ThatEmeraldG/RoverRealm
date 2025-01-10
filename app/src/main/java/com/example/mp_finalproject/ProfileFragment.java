@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +75,13 @@ public class ProfileFragment extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
 
         nightModeSwitch = view.findViewById(R.id.nightModeSwitch);
-        handleNightMode();
+        nightModeSwitch.setChecked(((MainActivity) requireActivity()).getNightMode());
+        nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ((MainActivity) requireActivity()).setNightMode(isChecked);
+            }
+        });
 
         userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
@@ -150,14 +157,6 @@ public class ProfileFragment extends Fragment {
         userViewModel.fetchUser();
 
         return view;
-    }
-
-    private void handleNightMode() {
-        boolean nightMode = ((MainActivity) requireActivity()).getNightMode();
-        nightModeSwitch.setChecked(nightMode);
-        nightModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            ((MainActivity) requireActivity()).setNightMode(isChecked);
-        });
     }
 
 }
