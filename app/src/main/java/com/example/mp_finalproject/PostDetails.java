@@ -83,6 +83,9 @@ public class PostDetails extends AppCompatActivity {
             tv_upvote.setText(String.valueOf(upvote));
             tv_dateTime.setText(formattedDate);
             tv_description.setText(description);
+
+            // Check if post is already liked
+            checkIfLiked();
         }
 
         // Back button functionality
@@ -91,6 +94,30 @@ public class PostDetails extends AppCompatActivity {
         // Upvote button functionality
         btn_upvote.setOnClickListener(v -> updateUpvote());
     }
+
+    private void checkIfLiked() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        db.collection("Users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        List<String> upvotedPosts = (List<String>) documentSnapshot.get("upvotedPostId");
+                        boolean isLiked = upvotedPosts != null && upvotedPosts.contains(postId);
+
+                        // Update like button based on the liked status
+                        updateLikeButton(isLiked);
+                    } else {
+                        Log.w("Firestore", "User document not found");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirestoreError", "Error fetching user data", e);
+                });
+    }
+
+
 
     private void updateUpvote() {
         if (postId == null || postId.isEmpty()) {
