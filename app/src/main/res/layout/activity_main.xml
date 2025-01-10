@@ -8,6 +8,18 @@
     tools:context=".MainActivity"
     style="@style/background">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tagsrecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        />
+
 <!--Fragment Container-->
     <FrameLayout
         android:id="@+id/fragmentContainer"
