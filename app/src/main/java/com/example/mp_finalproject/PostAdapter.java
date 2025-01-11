@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +36,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        String authorId = postList.get(position).getAuthorId();
-        String title = postList.get(position).getTitle();
-        Date date = postList.get(position).getDate();
-        int upvote = postList.get(position).getUpvote();
+        Post post = postList.get(position);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy 'at' HH:mm:ss z", Locale.getDefault());
+        String authorId = post.getAuthorId();
+        String title = post.getTitle();
+        Date date = post.getDate();
+        int upvote = post.getUpvote();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(date);
 
         holder.tv_title.setText(title);
@@ -59,13 +60,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
             @Override
             public void onClick(View v) {
                 int pos = holder.getAdapterPosition();
+                Post selectedPost = postList.get(pos);
                 Intent intent = new Intent(context, PostDetails.class);
-                intent.putExtra("post_id", postList.get(pos).getPostId());
-                intent.putExtra("title", postList.get(pos).getTitle());
-                intent.putExtra("description", postList.get(pos).getDescription());
-                intent.putExtra("author_name", postList.get(pos).getAuthorId());
-                intent.putExtra("date", postList.get(pos).getDate());
-                intent.putExtra("upvote", postList.get(pos).getUpvote());
+                intent.putExtra("post_id", selectedPost.getPostId());
+                intent.putExtra("title", selectedPost.getTitle());
+                intent.putExtra("description", selectedPost.getDescription());
+                intent.putExtra("date", selectedPost.getDate());
+                intent.putExtra("upvote", selectedPost.getUpvote());
+                intent.putExtra("author", selectedPost.getAuthorId());
 //                intent.putExtra("image", postList.get(pos).getImage());
 
                 context.startActivity(intent);
@@ -85,7 +87,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
 
     private void fetchAuthorName(String authorId, AuthorNameCallback callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users").document(authorId)
+        db.collection("Users")
+                .document(authorId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {

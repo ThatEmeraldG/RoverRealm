@@ -7,10 +7,35 @@
     tools:context=".HomeFragment"
     style="@style/background">
 
-    <!--RecyclerView-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_posts"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/headerBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            style="@style/background"
+            >
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/roverrealm_logo"
+                style="@style/logo" />
+        </LinearLayout>
+
+        <!--RecyclerView-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_posts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/headerBar"
+            />
+
+    </RelativeLayout>
 </FrameLayout>

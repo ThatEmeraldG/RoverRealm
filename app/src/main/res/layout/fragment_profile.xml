@@ -9,13 +9,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="12dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="12dp"
             android:background="@drawable/rounded_button_solid"
             android:backgroundTint="@android:color/holo_red_dark"
             android:gravity="center"
@@ -51,8 +51,8 @@
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/tab_layout"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_nightMode"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_profilePic">
 
             <ImageView
@@ -90,8 +90,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/lato_bold"
                 android:text="Dark Mode" />
 
         </LinearLayout>
@@ -100,8 +100,8 @@
             android:id="@+id/iv_profilePic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="50dp"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="50dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_pfp"
             app:civ_border_color="@color/primary_blue"
@@ -129,7 +129,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:text="UID:"
-            android:textSize="12sp"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/iv_profilePic"
             app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:text="Email:"
-            android:textSize="12sp"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/iv_profilePic"
             app:layout_constraintTop_toBottomOf="@id/tv_textId" />
 
@@ -147,24 +147,24 @@
             android:id="@+id/tv_userId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/darker_gray"
-            tools:text="Rover ID"
-            android:textSize="12sp"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/tv_textId"
-            app:layout_constraintTop_toBottomOf="@id/tv_username" />
+            app:layout_constraintTop_toBottomOf="@id/tv_username"
+            tools:text="Rover ID" />
 
         <TextView
             android:id="@+id/tv_userEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:textColor="@color/darker_gray"
-            android:layout_marginStart="8dp"
-            tools:text="blank_rover@gmail.com"
-            android:textSize="12sp"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/tv_textEmail"
-            app:layout_constraintTop_toBottomOf="@id/tv_userId" />
+            app:layout_constraintTop_toBottomOf="@id/tv_userId"
+            tools:text="blank_rover@gmail.com" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -172,14 +172,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_editProfile"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/primary_blue"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/primary_blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_editProfile">
+            app:tabSelectedTextColor="@color/primary_blue">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_createdPosts"

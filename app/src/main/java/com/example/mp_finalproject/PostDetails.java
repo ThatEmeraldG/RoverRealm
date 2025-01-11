@@ -3,7 +3,6 @@ package com.example.mp_finalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,9 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.mp_finalproject.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -68,21 +66,26 @@ public class PostDetails extends AppCompatActivity {
         if (intent != null) {
             postId = intent.getStringExtra("post_id");
             String description = intent.getStringExtra("description");
-            String author = intent.getStringExtra("author");
+            String authorId = intent.getStringExtra("author");
             String title = intent.getStringExtra("title");
             int upvote = intent.getIntExtra("upvote", 0);
             Date date = (Date) intent.getSerializableExtra("date");
 
             // Format date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy 'at' HH:mm:ss Z", Locale.getDefault());
             String formattedDate = dateFormat.format(date);
 
             // Set data to UI
-            tv_author.setText(author);
             tv_title.setText(title);
             tv_upvote.setText(String.valueOf(upvote));
             tv_dateTime.setText(formattedDate);
             tv_description.setText(description);
+            fetchAuthorName(authorId, new AuthorNameCallback() {
+                @Override
+                public void onCallback(String authorName) {
+                    tv_author.setText(authorName);
+                }
+            });
 
             // Check if post is already liked
             checkIfLiked();
@@ -152,12 +155,12 @@ public class PostDetails extends AppCompatActivity {
                                             // User already upvoted, cancel upvote
                                             newUpvotes = currentUpvotes - 1;
                                             updateAction = FieldValue.arrayRemove(postId);
-                                            updateLikeButton(false); // Set button to unfilled state
+                                            updateLikeButton(false);
                                         } else {
                                             // User has not upvoted, add upvote
                                             newUpvotes = currentUpvotes + 1;
                                             updateAction = FieldValue.arrayUnion(postId);
-                                            updateLikeButton(true); // Set button to filled state
+                                            updateLikeButton(true);
                                         }
 
                                         // Update post upvotes
@@ -203,11 +206,33 @@ public class PostDetails extends AppCompatActivity {
     }
     private void updateLikeButton(boolean isUpvoted) {
         if (isUpvoted) {
-            iv_upvote.setImageResource(R.drawable.thumb_up_fill_24px); // Change to filled like icon
+            iv_upvote.setImageResource(R.drawable.thumb_up_fill_24px);
         } else {
-            iv_upvote.setImageResource(R.drawable.thumb_up_24px); // Change to outline like icon
+            iv_upvote.setImageResource(R.drawable.thumb_up_24px);
         }
     }
 
+    private void fetchAuthorName(String authorId, AuthorNameCallback callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Users")
+                .document(authorId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        if (user != null) {
+                            callback.onCallback(user.getUsername());
+                        } else {
+                            callback.onCallback("Unknown Author");
+                        }
+                    } else {
+                        callback.onCallback("Unknown Author");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirestoreError", "Error fetching author name", e);
+                    callback.onCallback("Error, unknown author");
+                });
+    }
 
 }

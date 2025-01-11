@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        List<String> tags = Arrays.asList("Genshit", "WUWA", "HSR", "Arknights", "AzurLane");
+        List<String> tags = Arrays.asList("Carlotta", "Build Guide", "Must Pull", "High DMG");
         recyclerView = binding.tagsrecyclerView;
         tagAdapter = new TagAdapter(tags);
 

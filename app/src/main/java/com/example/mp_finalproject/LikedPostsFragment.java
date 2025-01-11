@@ -86,11 +86,9 @@ public class LikedPostsFragment extends Fragment {
                 .get()
                 .addOnSuccessListener(userDocument -> {
                     if (userDocument.exists()) {
-                        // Get the list of upvotedPostIds from the user's document
                         List<String> upvotedPostIds = (List<String>) userDocument.get("upvotedPostId");
 
                         if (upvotedPostIds != null && !upvotedPostIds.isEmpty()) {
-                            // Fetch posts using the upvotedPostIds
                             fetchLikedPosts(upvotedPostIds);
                         } else {
                             tvNotice.setText("No liked posts found.");
