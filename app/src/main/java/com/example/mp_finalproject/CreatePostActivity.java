@@ -1,6 +1,7 @@
 package com.example.mp_finalproject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class CreatePostActivity extends AppCompatActivity {
         });
 
         etTitle = findViewById(R.id.et_title);
-        etDescription =findViewById(R.id.et_description);
+        etDescription = findViewById(R.id.et_description);
         backBtn = findViewById(R.id.btn_back);
         submitBtn = findViewById(R.id.btn_submit);
         auth = FirebaseAuth.getInstance();
@@ -71,7 +72,9 @@ public class CreatePostActivity extends AppCompatActivity {
                 String description = etDescription.getText().toString().trim();
                 date = new Date();
 
-                createPost(title, description);
+                if (validatePost(title, description)) {
+                    createPost(title, description);
+                }
             }
         });
     }
@@ -92,6 +95,18 @@ public class CreatePostActivity extends AppCompatActivity {
         });
     }
 
-
+    private boolean validatePost(String title, String description){
+        if(TextUtils.isEmpty(title)){
+            etTitle.setError("Post title cannot be empty!");
+            etTitle.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(description)){
+            etDescription.setError("Post description cannot be empty!");
+            etDescription.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
 }

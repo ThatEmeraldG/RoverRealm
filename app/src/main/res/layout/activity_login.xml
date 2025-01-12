@@ -53,6 +53,7 @@
         android:layout_marginTop="40dp"
         android:hint="Email"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:layout_marginHorizontal="24dp"
         android:background="@drawable/rounded_corners"
         android:inputType="textEmailAddress" />
@@ -65,6 +66,7 @@
         android:layout_marginHorizontal="24dp"
         android:hint="Password"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:background="@drawable/rounded_corners"
         android:inputType="textPassword" />
 

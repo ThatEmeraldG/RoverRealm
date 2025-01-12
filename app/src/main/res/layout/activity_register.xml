@@ -53,6 +53,7 @@
         android:layout_marginHorizontal="24dp"
         android:hint="Username"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:background="@drawable/rounded_corners"
         android:inputType="text" />
 
@@ -64,6 +65,7 @@
         android:layout_marginHorizontal="24dp"
         android:hint="Email"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:background="@drawable/rounded_corners"
         android:inputType="textEmailAddress" />
 
@@ -75,6 +77,7 @@
         android:layout_marginHorizontal="24dp"
         android:hint="Password"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:background="@drawable/rounded_corners"
         android:inputType="textPassword" />
 
@@ -86,6 +89,7 @@
         android:layout_marginHorizontal="24dp"
         android:hint="Confirm Password"
         android:textSize="18sp"
+        android:textColorHighlight="@color/pale_blue"
         android:background="@drawable/rounded_corners"
         android:inputType="textPassword" />
 

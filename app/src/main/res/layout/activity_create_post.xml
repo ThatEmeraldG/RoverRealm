@@ -11,9 +11,8 @@
     <RelativeLayout
         android:id="@+id/headerNav"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:gravity="center_vertical"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,47 +26,94 @@
             android:layout_alignParentStart="true"
             android:src="@drawable/arrow_back_24px" />
 
+        <TextView
+            android:id="@+id/tv_activityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_toEndOf="@+id/btn_back"
+            android:fontFamily="@font/lato_bold"
+            android:layout_centerVertical="true"
+            android:text="Create Post"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Post"
+            android:textSize="16dp"
+            android:backgroundTint="@color/primary_blue"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/pale_white"
             android:layout_marginHorizontal="12dp"
             android:layout_centerVertical="true"
-            android:textSize="16dp"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
     <EditText
         android:id="@+id/et_title"
-        android:hint="Post Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="18sp"
-        android:gravity="top|start"
-        android:layout_marginVertical="6dp"
         android:layout_marginHorizontal="12dp"
-        android:textColorHint="@color/darker_gray"
-        android:textColorHighlight="@color/primary_blue"
+        android:layout_marginTop="6dp"
         android:background="@drawable/rounded_corners"
+        android:gravity="top|start"
+        android:hint="Post Title"
+        android:textColorHighlight="@color/pale_blue"
+        android:textColorHint="@color/darker_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/et_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerNav" />
 
     <EditText
         android:id="@+id/et_description"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="12dp"
+        android:layout_height="360dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rounded_corners"
         android:gravity="top|start"
         android:hint="Post Description"
-        android:textColorHighlight="@color/primary_blue"
+        android:textColorHighlight="@color/pale_blue"
         android:textColorHint="@color/darker_gray"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_title" />
 
+    <LinearLayout
+        android:id="@+id/btn_addTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button_solid"
+        android:backgroundTint="@color/primary_blue"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_margin="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/et_description"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <ImageView
+            android:id="@+id/icEdit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="6dp"
+            android:contentDescription="Add Post Tags"
+            android:src="@drawable/add_24px"
+            app:tint="@color/pale_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Tags"
+            android:textColor="@color/pale_white"
+            android:textSize="16dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

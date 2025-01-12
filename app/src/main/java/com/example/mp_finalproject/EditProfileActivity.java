@@ -93,7 +93,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 .update(userUpdates)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void unused) {
+                    public void onSuccess(Void v) {
                         Log.d("FirestoreSuccess", "User profile updated successfully");
                         Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
                         finish();
