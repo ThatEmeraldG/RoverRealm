@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mp_finalproject.adapter.PostAdapter;
 import com.example.mp_finalproject.model.Post;
 
 import java.util.ArrayList;

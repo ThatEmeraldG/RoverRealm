@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserViewModel extends ViewModel {
     private final MutableLiveData<User> userLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> errorMessage = new MutableLiveData<>(); // For error handling
+    private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
     public LiveData<User> getUser() {

@@ -1,13 +1,14 @@
-package com.example.mp_finalproject;
+package com.example.mp_finalproject.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mp_finalproject.R;
 
 public class PostViewHolder extends RecyclerView.ViewHolder{
 

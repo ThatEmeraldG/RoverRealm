@@ -1,5 +1,5 @@
 package com.example.mp_finalproject;
 
-public interface AuthorNameCallback {
+public interface UserCallback {
     void onCallback(String authorName);
 }

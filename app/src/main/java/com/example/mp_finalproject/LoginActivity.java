@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if(document.exists()){
+                        Toast.makeText(LoginActivity.this, "Welcome, " + document.getString("username"), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     } else {

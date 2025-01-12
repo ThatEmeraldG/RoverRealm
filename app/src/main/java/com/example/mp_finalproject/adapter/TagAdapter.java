@@ -1,4 +1,4 @@
-package com.example.mp_finalproject;
+package com.example.mp_finalproject.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mp_finalproject.R;
 
 import java.util.List;
 

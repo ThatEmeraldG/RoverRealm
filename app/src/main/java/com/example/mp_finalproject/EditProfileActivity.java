@@ -17,14 +17,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mp_finalproject.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     private EditText etUsername, etEmail, etPassword;
     private Button saveBtn;
@@ -96,7 +95,7 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d("FirestoreSuccess", "User profile updated successfully");
-                        Toast.makeText(EditProfile.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })

@@ -4,11 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mp_finalproject.adapter.TagAdapter;
 import com.example.mp_finalproject.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -34,8 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
-    private SharedPreferences modePreferences;
-    private boolean nightMode;
+    private SharedPreferences preferences;
     private ActivityMainBinding binding;
     private TagAdapter tagAdapter;
     private RecyclerView recyclerView;
@@ -66,9 +62,13 @@ public class MainActivity extends AppCompatActivity {
             controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         }
 
-        modePreferences = getSharedPreferences("modePreferences", Context.MODE_PRIVATE);
-        nightMode = modePreferences.getBoolean("nightMode", false);
-        applyNightMode();
+        preferences = getSharedPreferences("modePreferences", Context.MODE_PRIVATE);
+        boolean nightMode = preferences.getBoolean("nightMode", false);
+        if (nightMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         bottomNav = findViewById(R.id.bottomNavigation);
         HomeFragment homeFragment = new HomeFragment();
@@ -105,26 +105,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragmentContainer, selectedFragment)
                     .addToBackStack(null)
                     .commit();
-        }
-    }
-
-    public void setNightMode(boolean nightMode) {
-        this.nightMode = nightMode;
-        SharedPreferences.Editor modeEditor = modePreferences.edit();
-        modeEditor.putBoolean("nightMode", nightMode);
-        modeEditor.apply();
-        applyNightMode();
-    }
-
-    public boolean getNightMode() {
-        return nightMode;
-    }
-
-    public void applyNightMode() {
-        if (nightMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 

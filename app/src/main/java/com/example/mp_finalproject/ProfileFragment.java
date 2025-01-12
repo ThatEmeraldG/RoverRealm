@@ -2,8 +2,10 @@ package com.example.mp_finalproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,12 +14,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mp_finalproject.ProfileAdapter;
+import com.example.mp_finalproject.adapter.ProfileAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,8 @@ public class ProfileFragment extends Fragment {
     private ViewPager2 viewPager;
     private ProfileAdapter adapter;
     private SwitchCompat nightModeSwitch;
+    private boolean nightMode;
+    private SharedPreferences preferences;
 
 
     public ProfileFragment() {
@@ -75,12 +78,25 @@ public class ProfileFragment extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
 
         nightModeSwitch = view.findViewById(R.id.nightModeSwitch);
-        nightModeSwitch.setChecked(((MainActivity) requireActivity()).getNightMode());
+        preferences = requireActivity().getSharedPreferences("modePreferences", Context.MODE_PRIVATE);
+        nightMode = preferences.getBoolean("nightMode", false);
+        nightModeSwitch.setChecked(nightMode);
 
-        nightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        nightModeSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ((MainActivity) requireActivity()).setNightMode(isChecked);
+            public void onClick(View v) {
+                nightMode = !nightMode;
+                nightModeSwitch.setChecked(nightMode);
+
+                SharedPreferences.Editor preferencesEditor = preferences.edit();
+                preferencesEditor.putBoolean("nightMode", nightMode);
+                preferencesEditor.apply();
+
+                if (nightMode) {
+                    ((MainActivity) requireActivity()).getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    ((MainActivity) requireActivity()).getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
         });
 
@@ -116,7 +132,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 userViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
                     if(user != null){
-                        Intent intent = new Intent(context, EditProfile.class);
+                        Intent intent = new Intent(context, EditProfileActivity.class);
                         String username = user.getUsername();
                         String email = user.getEmail();
                         String password = user.getPassword();

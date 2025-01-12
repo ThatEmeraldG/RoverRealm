@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mp_finalproject.adapter.PostAdapter;
 import com.example.mp_finalproject.model.Post;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -82,7 +83,8 @@ public class LikedPostsFragment extends Fragment {
         }
 
         // Fetch the user's upvoted posts
-        db.collection("Users").document(userId)
+        db.collection("Users")
+                .document(userId)
                 .get()
                 .addOnSuccessListener(userDocument -> {
                     if (userDocument.exists()) {

@@ -1,4 +1,4 @@
-package com.example.mp_finalproject;
+package com.example.mp_finalproject.adapter;
 
 import android.util.Log;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mp_finalproject.R;
 
 public class TagViewHolder extends RecyclerView.ViewHolder {
     private TextView textView;

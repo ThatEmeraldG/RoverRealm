@@ -6,7 +6,7 @@
     style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostDetails">
+    tools:context=".PostDetailsActivity">
 
     <RelativeLayout
         android:id="@+id/headerNav"
@@ -102,6 +102,8 @@
         android:background="@drawable/tag_background"
         android:gravity="center"
         android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description">
 

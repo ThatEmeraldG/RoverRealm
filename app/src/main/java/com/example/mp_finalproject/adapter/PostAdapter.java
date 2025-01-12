@@ -1,4 +1,4 @@
-package com.example.mp_finalproject;
+package com.example.mp_finalproject.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mp_finalproject.PostDetailsActivity;
+import com.example.mp_finalproject.R;
+import com.example.mp_finalproject.UserCallback;
 import com.example.mp_finalproject.model.Post;
 import com.example.mp_finalproject.model.User;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +53,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.tv_title.setText(title);
         holder.tv_upvote.setText(String.valueOf(upvote));
         holder.tv_date.setText(formattedDate);
-        fetchAuthorName(authorId, new AuthorNameCallback() {
+        fetchAuthorName(authorId, new UserCallback() {
             @Override
             public void onCallback(String authorName) {
                 holder.tv_author.setText(authorName);
@@ -61,7 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
             public void onClick(View v) {
                 int pos = holder.getAdapterPosition();
                 Post selectedPost = postList.get(pos);
-                Intent intent = new Intent(context, PostDetails.class);
+                Intent intent = new Intent(context, PostDetailsActivity.class);
                 intent.putExtra("post_id", selectedPost.getPostId());
                 intent.putExtra("title", selectedPost.getTitle());
                 intent.putExtra("description", selectedPost.getDescription());
@@ -85,11 +89,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         this.postList = posts;
     }
 
-    private void fetchAuthorName(String authorId, AuthorNameCallback callback) {
+    private void fetchAuthorName(String authorId, UserCallback callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users")
-                .document(authorId)
-                .get()
+        DocumentReference userRef = db.collection("Users").document(authorId);
+
+        userRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         User user = documentSnapshot.toObject(User.class);
