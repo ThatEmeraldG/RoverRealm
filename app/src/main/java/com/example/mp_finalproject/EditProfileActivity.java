@@ -61,6 +61,16 @@ public class EditProfileActivity extends AppCompatActivity {
         etEmail.setText(email);
         etPassword.setText(password);
 
+        userViewModel.getErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (userViewModel.getUser().getValue() == null) {
+            userViewModel.fetchUser();
+        }
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     public void onSuccess(Void v) {
                         Log.d("FirestoreSuccess", "User profile updated successfully");
                         Toast.makeText(EditProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                        userViewModel.fetchUser();
                         finish();
                     }
                 })
